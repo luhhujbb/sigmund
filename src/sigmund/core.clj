@@ -217,9 +217,15 @@
                :host-name :primary-dns :secondary-dns]"
   [] .getNetInfo)
 
-(defsiglist net-if-names
+(defsiglist net-if-names-list
   "Returns the names of the network interfaces on the system."
   [] .getNetInterfaceList)
+
+(defn net-if-names
+  []
+  (filter
+    (fn [if-name] (> 0 (.indexOf if-name ":")))
+    (net-if-names-list)))
 
 (defn net-if-info
   "Returns the configuration information for the specified network interface.
